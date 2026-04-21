@@ -1,0 +1,234 @@
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --text: #162033;
+  --muted: #5c677d;
+  --accent: #0a66ff;
+  --border: #e6eaf2;
+  --shadow: 0 8px 24px rgba(22, 32, 51, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.page-header {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 2.5vw, 2.5rem);
+}
+
+.subtitle {
+  margin-top: 0.5rem;
+  color: var(--muted);
+}
+
+.tab-nav {
+  width: min(1100px, 92%);
+  margin: 0 auto 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tab-button {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab-button.is-active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.page-content {
+  width: min(1100px, 92%);
+  margin: 0 auto 2rem;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.is-active {
+  display: block;
+}
+
+.teams-container {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.team-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+
+.team-name {
+  margin: 0 0 1rem;
+}
+
+.kit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.kit-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: #fcfdff;
+}
+
+.kit-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.kit-version {
+  margin: 0.3rem 0 0.8rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.image-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.kit-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #eef2f8;
+  cursor: zoom-in;
+}
+
+.image-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 25, 0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 999;
+}
+
+.image-modal.is-open {
+  display: flex;
+}
+
+.image-modal-content {
+  position: relative;
+  width: min(900px, 95vw);
+  background: #fff;
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+.modal-image {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f3f5fa;
+}
+
+.modal-caption {
+  margin: 0.6rem 0 0.2rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.55rem;
+  border: none;
+  background: transparent;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #1b2333;
+}
+
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+
+.sizes-list {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+}
+
+.size-table-wrap {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.size-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+  background: #fff;
+}
+
+.size-table caption {
+  caption-side: top;
+  font-weight: 700;
+  margin-bottom: 0.55rem;
+}
+
+.size-table th,
+.size-table td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.55rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.size-table thead th {
+  background: #eef2f8;
+}
+
+.size-table tbody th {
+  text-align: left;
+  background: #f8faff;
+}
+
+/* On very small screens, keep layout comfortable */
+@media (max-width: 500px) {
+  .image-row {
+    grid-template-columns: 1fr;
+  }
+}

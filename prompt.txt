@@ -1,0 +1,70 @@
+I want to build a clean, modern, and scalable web catalog for 2026 FIFA World Cup team kits. I am a beginner with no coding experience, so I need simple, well-structured, and well-explained code.
+
+PROJECT GOAL:
+Create a responsive webpage that displays football (soccer) team kits for all 48 teams in the 2026 World Cup. Each team should have multiple kits, and each kit should display multiple images.
+
+IMPORTANT CONSTRAINT:
+Start with ONLY ONE TEAM as an example (for now), but structure the code so it can easily scale to all 48 teams later.
+
+FEATURE REQUIREMENTS:
+
+1. PAGE STRUCTURE:
+
+* A main title at the top: "World Cup 2026 Kits"
+* A section for each team
+* Inside each team:
+
+  * Team name
+  * Multiple kit cards
+
+2. KIT CARDS:
+   Each kit card must include:
+
+* Kit name (Home/Away)
+* Version type (Player Version or Fan Version)
+* At least 3 images displayed side by side
+* A placeholder "Buy Now" button
+
+3. DESIGN REQUIREMENTS:
+
+* Clean, modern, minimal design
+* Use CSS for styling
+* Rounded corners, spacing, and good alignment
+* Responsive layout (works on desktop and mobile)
+* Images displayed in a grid or flex layout
+
+4. FILE STRUCTURE:
+   Use this structure:
+
+* index.html
+* styles.css
+* script.js
+* /images folder
+
+5. SCALABILITY (VERY IMPORTANT):
+
+* The structure must be easy to duplicate for all teams
+* Avoid hardcoding everything in a messy way
+* Use reusable patterns or components where possible
+
+6. FUTURE FEATURES (prepare for later, but don’t fully implement yet):
+
+* Filtering by team
+* Filtering by Home/Away kits
+* Ability to add more images per kit
+* Easy way to plug in product links later
+
+7. DATA ORGANIZATION:
+   Explain how I should name images and organize them for scaling to 48 teams (e.g., teamname_home_player_1.jpg)
+
+8. EXPLANATION:
+   Explain every part of the code in simple terms, like you're teaching a beginner.
+
+OUTPUT FORMAT:
+
+* First, show the file structure
+* Then generate each file separately (HTML, CSS, JS)
+* Add comments inside the code explaining what each part does
+
+GOAL:
+I want to understand what I’m building, not just copy and paste.
