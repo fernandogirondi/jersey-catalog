@@ -191,9 +191,19 @@ h1 {
   color: var(--muted);
 }
 
+.table-hint {
+  margin: 0.75rem 0 0.25rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
 .size-table-wrap {
-  margin-top: 1rem;
+  margin-top: 0.4rem;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
 }
 
 .size-table {
@@ -226,9 +236,67 @@ h1 {
   background: #f8faff;
 }
 
-/* On very small screens, keep layout comfortable */
+/* Keep row labels visible while horizontally scrolling */
+.size-table th[scope="row"] {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #f8faff;
+}
+
+/* Keep top-left corner clean when header + sticky row header overlap */
+.size-table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .tab-button {
+    min-height: 44px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .info-card {
+    padding: 1rem;
+  }
+
+  .size-table {
+    min-width: 680px;
+  }
+
+  .size-table th,
+  .size-table td {
+    font-size: 0.88rem;
+    padding: 0.5rem 0.45rem;
+    white-space: nowrap;
+  }
+
+  .size-table caption {
+    text-align: left;
+    padding: 0 0.25rem;
+  }
+}
+
 @media (max-width: 500px) {
   .image-row {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  /* Player table: hide inch columns */
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table th:nth-child(3),
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table td:nth-child(3),
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table th:nth-child(5),
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table td:nth-child(5),
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table th:nth-child(7),
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table td:nth-child(7),
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table th:nth-child(9),
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table td:nth-child(9),
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table th:nth-child(11),
+  #sizes-panel .size-table-wrap:nth-of-type(2) .size-table td:nth-child(11) {
+    display: none;
   }
 }

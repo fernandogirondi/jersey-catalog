@@ -514,18 +514,91 @@ function getPriceByVersion(version) {
 }
 
 function initializeTabs() {
-  const tabButtons = document.querySelectorAll(".tab-button");
-  const tabPanels = document.querySelectorAll(".tab-panel");
+  const tabNav = document.querySelector(".tab-nav");
+  const tabButtons = Array.from(document.querySelectorAll(".tab-button"));
+  const tabPanels = Array.from(document.querySelectorAll(".tab-panel"));
 
-  tabButtons.forEach((button) => {
-    button.addEventListener("click", () => {
+  if (!tabButtons.length || !tabPanels.length) {
+    return;
+  }
+
+  if (tabNav) {
+    tabNav.setAttribute("role", "tablist");
+  }
+
+  const panelById = new Map(tabPanels.map((panel) => [panel.id, panel]));
+
+  tabButtons.forEach((button, index) => {
+    const targetPanelId = button.dataset.tabTarget;
+    const panel = panelById.get(targetPanelId);
+    const tabId = button.id || `tab-${targetPanelId || index}`;
+
+    button.id = tabId;
+    button.setAttribute("role", "tab");
+    if (targetPanelId) {
+      button.setAttribute("aria-controls", targetPanelId);
+    }
+
+    if (panel) {
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", tabId);
+    }
+  });
+
+  function setActiveTab(targetButton, options = {}) {
+    const shouldFocus = options.focus === true;
+
+    tabButtons.forEach((button) => {
+      const isSelected = button === targetButton;
       const targetPanelId = button.dataset.tabTarget;
+      const panel = panelById.get(targetPanelId);
 
-      tabButtons.forEach((item) => item.classList.remove("is-active"));
-      tabPanels.forEach((panel) => panel.classList.remove("is-active"));
+      button.classList.toggle("is-active", isSelected);
+      button.setAttribute("aria-selected", String(isSelected));
+      button.setAttribute("tabindex", isSelected ? "0" : "-1");
 
-      button.classList.add("is-active");
-      document.getElementById(targetPanelId).classList.add("is-active");
+      if (panel) {
+        panel.classList.toggle("is-active", isSelected);
+        panel.hidden = !isSelected;
+      }
+    });
+
+    if (shouldFocus) {
+      targetButton.focus();
+    }
+  }
+
+  const initiallyActiveButton =
+    tabButtons.find((button) => button.classList.contains("is-active")) ||
+    tabButtons[0];
+  setActiveTab(initiallyActiveButton);
+
+  tabButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      setActiveTab(button);
+    });
+
+    button.addEventListener("keydown", (event) => {
+      let nextButton = null;
+
+      if (event.key === "ArrowRight") {
+        nextButton = tabButtons[(index + 1) % tabButtons.length];
+      } else if (event.key === "ArrowLeft") {
+        nextButton = tabButtons[(index - 1 + tabButtons.length) % tabButtons.length];
+      } else if (event.key === "Home") {
+        nextButton = tabButtons[0];
+      } else if (event.key === "End") {
+        nextButton = tabButtons[tabButtons.length - 1];
+      } else if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        setActiveTab(button);
+        return;
+      }
+
+      if (nextButton) {
+        event.preventDefault();
+        setActiveTab(nextButton, { focus: true });
+      }
     });
   });
 }
