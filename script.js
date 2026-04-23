@@ -508,9 +508,9 @@ function closeImageModal() {
 
 function getPriceByVersion(version) {
   if (version === "Fan Version") {
-    return 35;
+    return 40;
   }
-  return 40;
+  return 45;
 }
 
 function initializeTabs() {
