@@ -13,7 +13,8 @@
     </header>
 
     <nav class="tab-nav" aria-label="Main sections">
-      <button class="tab-button is-active" data-tab-target="catalog-panel">Catalog</button>
+      <button class="tab-button is-active" data-tab-target="catalog-panel">2026 World Cup Teams</button>
+      <button class="tab-button" data-tab-target="brazilian-panel">Brazilian Teams</button>
       <button class="tab-button" data-tab-target="contact-panel">Contact Information</button>
       <button class="tab-button" data-tab-target="sizes-panel">Jersey Sizes Information</button>
       <button class="tab-button" data-tab-target="more-panel">More Jerseys</button>
@@ -21,8 +22,15 @@
 
     <main class="page-content">
       <section id="catalog-panel" class="tab-panel is-active">
+        <p class="catalog-note">Customization (name+number) available for an additional $3.</p>
         <!-- Teams are rendered by JavaScript from a reusable data structure -->
         <div id="teams-container" class="teams-container"></div>
+      </section>
+
+      <section id="brazilian-panel" class="tab-panel">
+        <p class="catalog-note">Customization (name+number) available for an additional $3.</p>
+        <!-- Brazilian club teams are rendered with the same card layout -->
+        <div id="brazilian-teams-container" class="teams-container"></div>
       </section>
 
       <section id="contact-panel" class="tab-panel">

@@ -475,7 +475,276 @@ const teamsData = [
   },
 ];
 
+const brazilianTeamsData = [
+  {
+    teamName: "Atlético MG",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/galo_home_1.jpg",
+          "images/BrazilianTeams/galo_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/galo_away_1.jpg",
+          "images/BrazilianTeams/galo_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "Botafogo",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/botafogo_home_1.jpg",
+          "images/BrazilianTeams/botafogo_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/botafogo_away_1.jpg",
+          "images/BrazilianTeams/botafogo_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "Corinthians",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/corinthians_home_1.jpg",
+          "images/BrazilianTeams/corinthians_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/corinthians_away_1.jpg",
+          "images/BrazilianTeams/corinthians_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "Cruzeiro",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/cruzeiro_home_1.jpg",
+          "images/BrazilianTeams/cruzeiro_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/cruzeiro_away_1.jpg",
+          "images/BrazilianTeams/cruzeiro_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "Flamengo",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/flamengo_home_1.jpg",
+          "images/BrazilianTeams/flamengo_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/flamengo_away_1.jpg",
+          "images/BrazilianTeams/flamengo_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "Fluminense",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/fluminense_home_1.jpg",
+          "images/BrazilianTeams/fluminense_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/fluminense_away_1.jpg",
+          "images/BrazilianTeams/fluminense_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "Grêmio",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/gremio_home_1.jpg",
+          "images/BrazilianTeams/gremio_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/gremio_away_1.jpg",
+          "images/BrazilianTeams/gremio_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "Internacional",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/inter_home_1.jpg",
+          "images/BrazilianTeams/inter_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/inter_away_1.jpg",
+          "images/BrazilianTeams/inter_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "Palmeiras",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/palmeiras_home_1.jpg",
+          "images/BrazilianTeams/palmeiras_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/palmeiras_away_1.jpg",
+          "images/BrazilianTeams/palmeiras_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "São Paulo",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/sao-paulo_home_1.jpg",
+          "images/BrazilianTeams/sao-paulo_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+  {
+    teamName: "Vasco",
+    kits: [
+      {
+        kitName: "Home",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/vasco_home_1.jpg",
+          "images/BrazilianTeams/vasco_home_2.jpg",
+        ],
+        buyLink: "#",
+      },
+      {
+        kitName: "Away",
+        version: "Fan Version",
+        enabled: true,
+        images: [
+          "images/BrazilianTeams/vasco_away_1.jpg",
+          "images/BrazilianTeams/vasco_away_2.jpg",
+        ],
+        buyLink: "#",
+      },
+    ],
+  },
+];
+
 const teamsContainer = document.getElementById("teams-container");
+const brazilianTeamsContainer = document.getElementById("brazilian-teams-container");
 
 /*
   Helper function: creates one image element.
@@ -609,7 +878,11 @@ function initializeTabs() {
   - Creates team sections
   - Loops through kits and creates cards
 */
-function renderTeams(teams) {
+function renderTeams(teams, containerElement) {
+  if (!containerElement) {
+    return;
+  }
+
   teams.forEach((team) => {
     const teamSection = document.createElement("section");
     teamSection.className = "team-section";
@@ -642,7 +915,7 @@ function renderTeams(teams) {
       const imageRow = document.createElement("div");
       imageRow.className = "image-row";
 
-      // Show multiple images side by side (at least 3 in our sample data)
+      // Automatically fits the available image count per kit.
       kit.images.forEach((imagePath, index) => {
         const imageElement = createKitImage(
           imagePath,
@@ -659,7 +932,7 @@ function renderTeams(teams) {
     });
 
     teamSection.appendChild(kitGrid);
-    teamsContainer.appendChild(teamSection);
+    containerElement.appendChild(teamSection);
   });
 }
 
@@ -678,4 +951,5 @@ document.addEventListener("keydown", (event) => {
 });
 
 initializeTabs();
-renderTeams(teamsData);
+renderTeams(teamsData, teamsContainer);
+renderTeams(brazilianTeamsData, brazilianTeamsContainer);
