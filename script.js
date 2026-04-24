@@ -22,9 +22,9 @@ const teamsData = [
           united-states_home_fan_3.jpg
         */
         images: [
-          "images/united-states_home_fan_1.jpg",
-          "images/united-states_home_fan_2.jpg",
           "images/united-states_home_fan_3.jpg",
+          "images/united-states_home_fan_2.jpg",
+          "images/united-states_home_fan_1.jpg",
         ],
         buyLink: "#",
       },
@@ -33,9 +33,9 @@ const teamsData = [
         version: "Fan Version",
         enabled: true,
         images: [
-          "images/united-states_away_fan_1.jpg",
-          "images/united-states_away_fan_2.jpg",
           "images/united-states_away_fan_3.jpg",
+          "images/united-states_away_fan_2.jpg",
+          "images/united-states_away_fan_1.jpg",
         ],
         buyLink: "#",
       },
@@ -759,6 +759,200 @@ function createKitImage(imagePath, altText) {
   return image;
 }
 
+const SWIPE_THRESHOLD_PX = 50;
+const TAP_SUPPRESS_MS = 400;
+
+/**
+ * Fills a media node with a single image, or a swipeable/clickable carousel if multiple paths.
+ * @param {HTMLElement} imageWrap
+ * @param {string[]} imagePaths
+ * @param {string} imageAltText - base; "photo i of n" is appended when n > 1
+ */
+function mountKitCardMedia(imageWrap, imagePaths, imageAltText) {
+  if (!imagePaths || imagePaths.length === 0) {
+    return;
+  }
+
+  if (imagePaths.length === 1) {
+    const path = imagePaths[0];
+    const img = createKitImage(path, imageAltText);
+    img.addEventListener("click", () => {
+      openImageModal(path, imageAltText);
+    });
+    imageWrap.appendChild(img);
+    return;
+  }
+
+  const n = imagePaths.length;
+  imageWrap.classList.add("kit-card__media--carousel");
+  imageWrap.setAttribute("role", "group");
+  imageWrap.setAttribute("aria-label", imageAltText);
+  if (!imageWrap.hasAttribute("tabindex")) {
+    imageWrap.setAttribute("tabindex", "0");
+  }
+
+  const track = document.createElement("div");
+  track.className = "kit-card__track";
+  track.style.setProperty("--n", String(n));
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    track.classList.add("is-reduced-motion");
+  }
+
+  const altAt = (i) => `${imageAltText} (photo ${i + 1} of ${n})`;
+  let currentIndex = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchActive = false;
+  let touchMoved = false;
+  let suppressImageClick = false;
+
+  const counterEl = document.createElement("div");
+  counterEl.className = "kit-card__counter";
+  counterEl.setAttribute("aria-hidden", "true");
+  counterEl.textContent = `1 / ${n}`;
+
+  const makeNavButton = (direction, label) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `kit-card__nav-btn kit-card__nav-btn--${direction}`;
+    button.setAttribute("aria-label", label);
+    return button;
+  };
+
+  const prevButton = makeNavButton("prev", "Previous photo");
+  const nextButton = makeNavButton("next", "Next photo");
+  prevButton.textContent = "‹";
+  nextButton.textContent = "›";
+
+  const updateTransform = () => {
+    track.style.setProperty("transform", `translateX(calc(-100% * ${currentIndex} / ${n}))`);
+  };
+
+  const updateUi = () => {
+    updateTransform();
+    prevButton.disabled = currentIndex === 0;
+    nextButton.disabled = currentIndex === n - 1;
+    counterEl.textContent = `${currentIndex + 1} / ${n}`;
+    imageWrap.setAttribute(
+      "aria-label",
+      `${imageAltText} — photo ${currentIndex + 1} of ${n}. Use arrows, buttons, or swipe.`
+    );
+  };
+
+  const go = (delta) => {
+    const next = currentIndex + delta;
+    if (next < 0 || next > n - 1) {
+      return;
+    }
+    currentIndex = next;
+    updateUi();
+  };
+
+  prevButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    go(-1);
+  });
+  nextButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    go(1);
+  });
+
+  for (let i = 0; i < n; i += 1) {
+    const slide = document.createElement("div");
+    slide.className = "kit-card__slide";
+    const img = createKitImage(imagePaths[i], altAt(i));
+    img.addEventListener("click", (event) => {
+      if (suppressImageClick) {
+        event.preventDefault();
+        return;
+      }
+      openImageModal(imagePaths[currentIndex], altAt(currentIndex));
+    });
+    slide.appendChild(img);
+    track.appendChild(slide);
+  }
+
+  const nav = document.createElement("div");
+  nav.className = "kit-card__nav";
+  nav.append(prevButton, nextButton);
+
+  imageWrap.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.touches.length !== 1) {
+        return;
+      }
+      touchActive = true;
+      touchMoved = false;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
+
+  imageWrap.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!touchActive || e.touches.length !== 1) {
+        return;
+      }
+      const x = e.touches[0].clientX;
+      const y = e.touches[0].clientY;
+      if (Math.abs(x - touchStartX) > 10 || Math.abs(y - touchStartY) > 10) {
+        touchMoved = true;
+      }
+    },
+    { passive: true }
+  );
+
+  imageWrap.addEventListener("touchend", (e) => {
+    if (!touchActive) {
+      return;
+    }
+    touchActive = false;
+    const t = e.changedTouches[0];
+    if (!t) {
+      return;
+    }
+    const endX = t.clientX;
+    const endY = t.clientY;
+    const dx = endX - touchStartX;
+    const dy = endY - touchStartY;
+    if (Math.abs(dx) < SWIPE_THRESHOLD_PX || Math.abs(dx) < Math.abs(dy)) {
+      if (touchMoved) {
+        suppressImageClick = true;
+        window.setTimeout(() => {
+          suppressImageClick = false;
+        }, TAP_SUPPRESS_MS);
+      }
+      return;
+    }
+    suppressImageClick = true;
+    window.setTimeout(() => {
+      suppressImageClick = false;
+    }, TAP_SUPPRESS_MS);
+    if (dx < 0) {
+      go(1);
+    } else {
+      go(-1);
+    }
+  });
+
+  imageWrap.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      go(-1);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      go(1);
+    }
+  });
+
+  imageWrap.append(track, counterEl, nav);
+  currentIndex = 0;
+  updateUi();
+}
+
 function openImageModal(src, alt) {
   const modal = document.getElementById("image-modal");
   const modalImage = document.getElementById("modal-image");
@@ -775,8 +969,11 @@ function closeImageModal() {
   modal.classList.remove("is-open");
 }
 
-function getPriceByVersion(version) {
+function getPriceByVersion(version, teamName) {
   if (version === "Fan Version") {
+    return 40;
+  }
+  if (teamName === "Brazil" && version === "Women's Version") {
     return 40;
   }
   return 45;
@@ -876,7 +1073,7 @@ function initializeTabs() {
   Main renderer:
   - Loops through teams
   - Creates team sections
-  - Loops through kits and creates cards
+  - Loops through kits and creates one store-style card per style (name, version, price; multiple photos use carousel)
 */
 function renderTeams(teams, containerElement) {
   if (!containerElement) {
@@ -900,34 +1097,37 @@ function renderTeams(teams, containerElement) {
         return;
       }
 
+      if (!kit.images || !kit.images.length) {
+        return;
+      }
+
       const kitCard = document.createElement("article");
       kitCard.className = "kit-card";
-      const price = getPriceByVersion(kit.version);
+      const price = getPriceByVersion(kit.version, team.teamName);
+      const productName = `${team.teamName} ${kit.kitName}`;
+      const imageAlt = `${team.teamName} ${kit.kitName} ${kit.version}`;
+
+      const imageWrap = document.createElement("div");
+      imageWrap.className = "kit-card__media";
+      mountKitCardMedia(imageWrap, kit.images, imageAlt);
+
+      const textBlock = document.createElement("div");
+      textBlock.className = "kit-card__body";
 
       const kitTitle = document.createElement("h3");
       kitTitle.className = "kit-title";
-      kitTitle.textContent = kit.version;
+      kitTitle.textContent = productName;
 
       const kitVersion = document.createElement("p");
       kitVersion.className = "kit-version";
-      kitVersion.textContent = `${kit.kitName} Kit - $${price}`;
+      kitVersion.textContent = kit.version;
 
-      const imageRow = document.createElement("div");
-      imageRow.className = "image-row";
+      const priceEl = document.createElement("p");
+      priceEl.className = "kit-price";
+      priceEl.textContent = `$${price}`;
 
-      // Automatically fits the available image count per kit.
-      kit.images.forEach((imagePath, index) => {
-        const imageElement = createKitImage(
-          imagePath,
-          `${team.teamName} ${kit.kitName} ${kit.version} image ${index + 1}`
-        );
-        imageElement.addEventListener("click", () => {
-          openImageModal(imagePath, imageElement.alt);
-        });
-        imageRow.appendChild(imageElement);
-      });
-
-      kitCard.append(kitTitle, kitVersion, imageRow);
+      textBlock.append(kitTitle, kitVersion, priceEl);
+      kitCard.append(imageWrap, textBlock);
       kitGrid.appendChild(kitCard);
     });
 
@@ -951,5 +1151,8 @@ document.addEventListener("keydown", (event) => {
 });
 
 initializeTabs();
-renderTeams(teamsData, teamsContainer);
+renderTeams(
+  [...teamsData].sort((a, b) => a.teamName.localeCompare(b.teamName, "en")),
+  teamsContainer
+);
 renderTeams(brazilianTeamsData, brazilianTeamsContainer);
