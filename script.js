@@ -1151,6 +1151,25 @@ document.addEventListener("keydown", (event) => {
 });
 
 initializeTabs();
+
+function syncSiteCtaRailSpacer() {
+  const rail = document.getElementById("site-cta-rail");
+  const spacer = document.getElementById("site-cta-rail-spacer");
+  if (!rail || !spacer) {
+    return;
+  }
+  spacer.style.height = `${rail.getBoundingClientRect().height}px`;
+}
+
+syncSiteCtaRailSpacer();
+window.addEventListener("resize", syncSiteCtaRailSpacer);
+window.addEventListener("load", syncSiteCtaRailSpacer);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => {
+    syncSiteCtaRailSpacer();
+  });
+}
+
 renderTeams(
   [...teamsData].sort((a, b) => a.teamName.localeCompare(b.teamName, "en")),
   teamsContainer
