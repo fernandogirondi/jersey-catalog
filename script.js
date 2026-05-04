@@ -979,6 +979,34 @@ function getPriceByVersion(version, teamName) {
   return 45;
 }
 
+/** Site-wide jersey sale: crossed original + reduced price on cards */
+const SHIRT_SALE_ENABLED = true;
+const SHIRT_SALE_OFF_DOLLARS = 5;
+
+function attachKitPriceElement(priceEl, regularPrice) {
+  if (
+    SHIRT_SALE_ENABLED &&
+    SHIRT_SALE_OFF_DOLLARS > 0 &&
+    regularPrice >= SHIRT_SALE_OFF_DOLLARS
+  ) {
+    const salePrice = regularPrice - SHIRT_SALE_OFF_DOLLARS;
+    const row = document.createElement("span");
+    row.className = "kit-price__row";
+    row.setAttribute("aria-label", `Was $${regularPrice}, sale price $${salePrice}`);
+    const was = document.createElement("del");
+    was.className = "kit-price__was";
+    was.textContent = `$${regularPrice}`;
+    const now = document.createElement("span");
+    now.className = "kit-price__now";
+    now.textContent = `$${salePrice}`;
+    row.append(was, "\u00A0", now);
+    priceEl.appendChild(row);
+    return;
+  }
+
+  priceEl.textContent = `$${regularPrice}`;
+}
+
 function initializeTabs() {
   const tabNav = document.querySelector(".tab-nav");
   const tabButtons = Array.from(document.querySelectorAll(".tab-button"));
@@ -1103,7 +1131,7 @@ function renderTeams(teams, containerElement) {
 
       const kitCard = document.createElement("article");
       kitCard.className = "kit-card";
-      const price = getPriceByVersion(kit.version, team.teamName);
+      const regularPrice = getPriceByVersion(kit.version, team.teamName);
       const productName = `${team.teamName} ${kit.kitName}`;
       const imageAlt = `${team.teamName} ${kit.kitName} ${kit.version}`;
 
@@ -1124,7 +1152,7 @@ function renderTeams(teams, containerElement) {
 
       const priceEl = document.createElement("p");
       priceEl.className = "kit-price";
-      priceEl.textContent = `$${price}`;
+      attachKitPriceElement(priceEl, regularPrice);
 
       textBlock.append(kitTitle, kitVersion, priceEl);
       kitCard.append(imageWrap, textBlock);
